@@ -12,7 +12,7 @@ vkdb is an in-memory key-value database server inspired by Redis. It demonstrate
 ## Key Features
 
 - **✓ In-memory Key-Value Storage**: Fast data operations with O(1) average time complexity
-- **✓ Concurrent com.vkdb.Client Connections**: Handles multiple clients simultaneously with Java's virtual threads
+- **✓ Concurrent Client Connections**: Handles multiple clients simultaneously with Java's virtual threads
 - **✓ Real-time Notifications**: Subscribe to key changes with the `NOTIFY` command
 - **✓ Simple Text Protocol**: Easy-to-use command interface similar to Redis
 - **✓ Scalable Architecture**: Designed to handle thousands of concurrent connections
@@ -39,13 +39,13 @@ mvn clean package
 ### Running the Server
 
 ```bash
-java -jar target/vkdb-1.0.jar
+java -jar server/target/vkdb-1.0.jar
 ```
 
-### Running the com.vkdb.Client
+### Running the Client
 
 ```bash
-java -jar target/vkdb-client-1.0.jar
+java -jar client/target/vkdb-client-1.0.jar
 ```
 
 ## Usage Examples
@@ -63,20 +63,20 @@ DELETED
 
 ### Notification System
 
-In com.vkdb.Client 1
+In Client 1
 
 ```shell
 vkdb> NOTIFY user1
 OK
 ```
 
-In com.vkdb.Client 2
+In Client 2
 
 ```shell
 vkdb> SET user1 "Jane Smith"
 ```
 
-com.vkdb.Client 1 will automatically receive:
+Client 1 will automatically receive:
 
 ```shell
 CHANGED user1 Jane Smith
