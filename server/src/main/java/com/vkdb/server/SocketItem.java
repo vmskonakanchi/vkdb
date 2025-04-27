@@ -9,10 +9,10 @@ public class SocketItem {
     private final Socket socket;
     private final DataOutputStream outputStream;
     private final DataInputStream inputStream;
-    private final ConcurrentHashMap<String, String> database;
+    private final ConcurrentHashMap<String, SaveItem> database;
     private final String id;
 
-    public SocketItem(String id, Socket socket, ConcurrentHashMap<String, String> database, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
+    public SocketItem(String id, Socket socket, ConcurrentHashMap<String, SaveItem> database, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
         this.id = id;
         this.socket = socket;
         this.outputStream = dataOutputStream;
@@ -28,7 +28,7 @@ public class SocketItem {
         return this.socket;
     }
 
-    public ConcurrentHashMap<String, String> getDatabase() {
+    public ConcurrentHashMap<String, SaveItem> getDatabase() {
         return this.database;
     }
 

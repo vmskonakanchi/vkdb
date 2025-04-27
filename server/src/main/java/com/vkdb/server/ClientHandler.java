@@ -15,19 +15,21 @@ public class ClientHandler implements Runnable {
     private final LinkedBlockingQueue<NotifyItem> notificationsQueue;
     private static final Logger logger = Logger.getLogger(ClientHandler.class.getName());
     private final ConcurrentHashMap<String, NotifyItem> keySocketsMap;
+    private final LinkedBlockingQueue<SaveItem> diskWriteItems;
+    private final ConcurrentHashMap<String, SaveItem> database;
 
-    public ClientHandler(SocketItem socketItem, LinkedBlockingQueue<NotifyItem> notificationsQueue, ConcurrentHashMap<String, NotifyItem> keySocketsMap) {
+    public ClientHandler(SocketItem socketItem, LinkedBlockingQueue<NotifyItem> notificationsQueue, ConcurrentHashMap<String, NotifyItem> keySocketsMap, LinkedBlockingQueue<SaveItem> diskWriteItems) {
         this.socketItem = socketItem;
         this.notificationsQueue = notificationsQueue;
         this.keySocketsMap = keySocketsMap;
+        this.diskWriteItems = diskWriteItems;
+        this.database = socketItem.getDatabase();
     }
 
     @Override
     public void run() {
         try {
             Socket socket = socketItem.getSocket();
-
-            ConcurrentHashMap<String, String> database = socketItem.getDatabase();
 
             logger.info("Client connected from " + socketItem.getId());
 
@@ -50,10 +52,35 @@ public class ClientHandler implements Runnable {
                         } else {
                             // we save it to a hashmap for now
                             String key = commandParts[1];
-                            String oldValue = database.get(key);
+                            SaveItem saveItem = database.get(key);
+                            String oldValue = saveItem == null ? "" : saveItem.getValue();
                             String newValue = commandParts[2];
                             if (!newValue.equals(oldValue)) {
-                                // TODO : Notify the client who has been asked to notify
+                                // check if the key is marked as notified
+                                if (keySocketsMap.containsKey(key)) {
+                                    NotifyItem item = keySocketsMap.get(key);       // Take the item from the key,socket map
+                                    item.setValue(newValue);                        // set the updated value
+                                    notificationsQueue.put(item);                   // put that item in a queue
+                                }
+                            }
+                            saveItem = new SaveItem(key, newValue, "S");
+                            diskWriteItems.put(saveItem); // adding it to the list
+                            database.put(key, saveItem);
+                            dou.writeUTF("SAVED");
+                        }
+                        break;
+                    }
+                    case "SETX": {
+                        if (commandParts.length != 4) {
+                            dou.writeUTF("ERROR USAGE SETX <KEY> <VALUE> <TTL>");
+                        } else {
+                            // we save it to a hashmap for now
+                            String key = commandParts[1];
+                            SaveItem saveItem = database.get(key);
+                            String oldValue = saveItem == null ? "" : saveItem.getValue();
+                            String newValue = commandParts[2];
+                            Long ttl = Long.parseLong(commandParts[3]);
+                            if (!newValue.equals(oldValue)) {
                                 // check if the key is marked as notified
                                 if (keySocketsMap.containsKey(key)) {
                                     NotifyItem item = keySocketsMap.get(key);
@@ -61,7 +88,9 @@ public class ClientHandler implements Runnable {
                                     notificationsQueue.put(item);
                                 }
                             }
-                            database.put(commandParts[1], newValue);
+                            saveItem = new SaveItem(key, newValue, "SX", ttl);
+                            diskWriteItems.put(saveItem); // adding it to the list
+                            database.put(key, saveItem);
                             dou.writeUTF("SAVED");
                         }
                         break;
@@ -72,7 +101,8 @@ public class ClientHandler implements Runnable {
                         } else {
                             // we get it from hashmap if exists NOT FOUND if it doesn't
                             String key = commandParts[1];
-                            dou.writeUTF(database.getOrDefault(key, "NOT FOUND"));
+                            SaveItem item = database.getOrDefault(key, null);
+                            dou.writeUTF(item == null ? "NOT FOUND" : item.getValue());
                         }
                         break;
                     }
@@ -83,7 +113,10 @@ public class ClientHandler implements Runnable {
                             // we get it from hashmap if exists NOT FOUND if it doesn't
                             String key = commandParts[1];
                             if (database.containsKey(key)) {
+                                SaveItem item = database.get(key);
+                                item.setOperation("D");
                                 database.remove(key);
+                                diskWriteItems.put(item);
                                 dou.writeUTF("DELETED");
                             } else {
                                 dou.writeUTF("NOT FOUND");
@@ -107,7 +140,7 @@ public class ClientHandler implements Runnable {
                         break;
                     }
                     default:
-                        dou.writeUTF("WRONG AVAILABLE ARE GET SET DEL NOTIFY");
+                        dou.writeUTF("WRONG AVAILABLE ARE GET, SET, SETX, DEL, NOTIFY");
                         break;
                 }
             }

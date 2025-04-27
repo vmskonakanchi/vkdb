@@ -55,6 +55,8 @@ java -jar client/target/vkdb-client-1.0.jar
 ```bash
 vkdb> SET user1 "John Doe"
 SAVED
+vkdb> SET user1 "John Doe" 10000
+SAVED
 vkdb> GET user1
 John Doe
 vkdb> DEL user1
@@ -84,18 +86,19 @@ CHANGED user1 Jane Smith
 
 ## Command Reference
 
-| Command    | Format            | Description                             |
-| ---------- | ----------------- | --------------------------------------- |
-| SET        | `SET key value` | Sets a key to hold the specified value  |
-| GET        | `GET key`       | Gets the value of a key                 |
-| DEL        | `DEL key`       | Deletes a key                           |
-| NOTIFY     | `NOTIFY key`    | Subscribe to changes for a specific key |
-| DISCONNECT | `DISCONNECT`    | Close the connection to the server      |
+| Command    | Format              | Description                                                             |
+|------------|---------------------|-------------------------------------------------------------------------|
+| SET        | `SET key value`     | Sets a key to hold the specified value                                  |
+| SETX       | `SET key value ttl` | Sets a key to hold the specified value with expity time in milliseconds |
+| GET        | `GET key`           | Gets the value of a key                                                 |
+| DEL        | `DEL key`           | Deletes a key                                                           |
+| NOTIFY     | `NOTIFY key`        | Subscribe to changes for a specific key                                 |
+| DISCONNECT | `DISCONNECT`        | Close the connection to the server                                      |
 
 ## Project Roadmap
 
-- [ ] **Persistence**: Save/restore data from disk
-- [ ] **Key Expiration**: Set time-to-live for keys
+- [x] **Persistence**: Save/restore data from disk
+- [x] **Key Expiration**: Set time-to-live for keys
 - [ ] **Data Types**: Support for lists, sets, and hashes
 - [ ] **Command Pipelining**: Batch multiple commands
 - [ ] **Authentication**: Simple password protection
@@ -110,6 +113,7 @@ vkdb uses a client-server architecture with the following components:
 - **ClientHandler**: Manages individual client sessions and commands
 - **NotifyItem**: Handles the notification system for key changes
 - **SocketItem**: Encapsulates socket communication details
+- **SaveItem**: Encapsulates data storage and expiration
 
 The notification system is implemented using a publisher-subscriber pattern with a non-blocking queue for processing notifications asynchronously.
 
@@ -132,7 +136,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Inspired by [Redis](https://redis.io/)
 - Built with Java virtual threads (Project Loom)
-
----
-
-**Note**: vkdb is an educational project intended for learning and experimentation, not for production use.
