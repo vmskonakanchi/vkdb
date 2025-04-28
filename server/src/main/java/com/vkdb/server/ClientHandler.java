@@ -228,7 +228,7 @@ public class ClientHandler implements Runnable {
                     transactionList.addLast("START");
                     output = "START";
                 }
-                case "END" -> {
+                case "COMMIT" -> {
                     if (transactionList.isEmpty()) {
                         output = "NO ITEMS FOUND";
                     } else {
@@ -260,7 +260,7 @@ public class ClientHandler implements Runnable {
                         output = "OK";
                     }
                 }
-                default -> output = "WRONG AVAILABLE ARE GET, SET, SETX, DEL, NOTIFY,BEGIN,END,LOGIN,REGISTER,WHOAMI";
+                default -> output = "WRONG AVAILABLE ARE GET, SET, SETX, DEL, NOTIFY,BEGIN,COMMIT,LOGIN,REGISTER,WHOAMI";
             }
 
             return output;

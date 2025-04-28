@@ -101,7 +101,7 @@ public class VkDbTester {
         assertEquals("SAVED TO BATCH", dataInputStream.readUTF());
         dataOutputStream.writeUTF("GET count");
         assertEquals("NOT FOUND", dataInputStream.readUTF());
-        dataOutputStream.writeUTF("END");
+        dataOutputStream.writeUTF("COMMIT");
         assertEquals("COMMITTED", dataInputStream.readUTF());
         dataOutputStream.writeUTF("GET visitors");
         assertEquals("1024", dataInputStream.readUTF());
