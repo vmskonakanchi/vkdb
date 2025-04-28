@@ -95,7 +95,7 @@ CHANGED user1 Jane Smith
 | BEGIN      | `BEGIN`                           | Begins a transaction                                                    |
 | COMMIT     | `COMMIT`                          | Commit a transaction                                                    |
 | REGISTER   | `REGISTER <USERNAME> <PASSWORD>`  | Register a user with username and password                              |
-| REGISTER   | `LOGIN <USERNAME> <PASSWORD>`     | Login a user with username and password                                 |
+| LOGIN      | `LOGIN <USERNAME> <PASSWORD>`     | Login a user with username and password                                 |
 | WHOAMI     | `WHOAMI`                          | Gets the current logged in user                                         |
 | NOTIFY     | `NOTIFY <KEY>`                    | Subscribe to changes for a specific key                                 |
 | DISCONNECT | `DISCONNECT`                      | Closes the connection to the server                                     |
@@ -119,6 +119,7 @@ vkdb uses a client-server architecture with the following components:
 - **NotifyItem**: Handles the notification system for key changes
 - **SocketItem**: Encapsulates socket communication details
 - **SaveItem**: Encapsulates data storage and expiration
+- **AuthUser**: Encapsulates user storage and retrival and other logic
 
 The notification system is implemented using a publisher-subscriber pattern with a non-blocking queue for processing notifications asynchronously.
 

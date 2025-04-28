@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="" />
+    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="updated documentation to reflect completed features and added tests as well using Junit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -168,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745852039663</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="updated documentation to reflect completed features and added tests as well using Junit">
+      <option name="closed" value="true" />
+      <created>1745852553987</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1745852553987</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -187,6 +195,7 @@
     <MESSAGE value="changed LICENSE and README.md" />
     <MESSAGE value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
     <MESSAGE value="added username and password authentication partially" />
-    <option name="LAST_COMMIT_MESSAGE" value="added username and password authentication partially" />
+    <MESSAGE value="updated documentation to reflect completed features and added tests as well using Junit" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated documentation to reflect completed features and added tests as well using Junit" />
   </component>
 </project>
