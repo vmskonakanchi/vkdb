@@ -86,14 +86,19 @@ CHANGED user1 Jane Smith
 
 ## Command Reference
 
-| Command    | Format               | Description                                                             |
-|------------|----------------------|-------------------------------------------------------------------------|
-| SET        | `SET key value`      | Sets a key to hold the specified value                                  |
-| SETX       | `SETX key value ttl` | Sets a key to hold the specified value with expiry time in milliseconds |
-| GET        | `GET key`            | Gets the value of a key                                                 |
-| DEL        | `DEL key`            | Deletes a key                                                           |
-| NOTIFY     | `NOTIFY key`         | Subscribe to changes for a specific key                                 |
-| DISCONNECT | `DISCONNECT`         | Close the connection to the server                                      |
+| Command    | Format                            | Description                                                             |
+|------------|-----------------------------------|-------------------------------------------------------------------------|
+| SET        | `SET <KEY> <VALUE>`               | Sets a key to hold the specified value                                  |
+| SETX       | `SETX <KEY> <VALUE> <TTL>`        | Sets a key to hold the specified value with expiry time in milliseconds |
+| GET        | `GET <KEY>`                       | Gets the value of a key                                                 |
+| DEL        | `DEL <KEY>`                       | Deletes a key                                                           |
+| BEGIN      | `BEGIN`                           | Begins a transaction                                                    |
+| COMMIT     | `COMMIT`                          | Commit a transaction                                                    |
+| REGISTER   | `REGISTER <USERNAME> <PASSWORD>`  | Register a user with username and password                              |
+| REGISTER   | `LOGIN <USERNAME> <PASSWORD>`     | Login a user with username and password                                 |
+| WHOAMI     | `WHOAMI`                          | Gets the current logged in user                                         |
+| NOTIFY     | `NOTIFY <KEY>`                    | Subscribe to changes for a specific key                                 |
+| DISCONNECT | `DISCONNECT`                      | Closes the connection to the server                                     |
 
 ## Project Roadmap
 

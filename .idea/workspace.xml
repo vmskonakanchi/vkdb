@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="added persistance and recovery via a simple append only log , and added ttl with expiration">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/ServerTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/ServerLoadTester.java" afterDir="false" />
-    </list>
+    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -170,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745757978576</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added username and password authentication partially">
+      <option name="closed" value="true" />
+      <created>1745852039663</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745852039663</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -188,6 +186,7 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="changed LICENSE and README.md" />
     <MESSAGE value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
-    <option name="LAST_COMMIT_MESSAGE" value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
+    <MESSAGE value="added username and password authentication partially" />
+    <option name="LAST_COMMIT_MESSAGE" value="added username and password authentication partially" />
   </component>
 </project>
