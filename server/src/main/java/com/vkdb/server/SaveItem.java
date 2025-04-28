@@ -17,12 +17,12 @@ public class SaveItem {
         this.key = key;
         this.value = value;
         this.operation = operation;
-        this.ttl = System.currentTimeMillis();
+        this.ttl = null;
     }
 
     public boolean hasExpired() {
         // check the ttl
-        return System.currentTimeMillis() > this.ttl;
+        return this.ttl != null && System.currentTimeMillis() > this.ttl;
     }
 
     public void setOperation(String operation) {

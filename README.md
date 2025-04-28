@@ -55,7 +55,7 @@ java -jar client/target/vkdb-client-1.0.jar
 ```bash
 vkdb> SET user1 "John Doe"
 SAVED
-vkdb> SET user1 "John Doe" 10000
+vkdb> SETX user1 "John Doe" 10000 # set key with with expiry
 SAVED
 vkdb> GET user1
 John Doe
@@ -86,23 +86,23 @@ CHANGED user1 Jane Smith
 
 ## Command Reference
 
-| Command    | Format              | Description                                                             |
-|------------|---------------------|-------------------------------------------------------------------------|
-| SET        | `SET key value`     | Sets a key to hold the specified value                                  |
-| SETX       | `SET key value ttl` | Sets a key to hold the specified value with expity time in milliseconds |
-| GET        | `GET key`           | Gets the value of a key                                                 |
-| DEL        | `DEL key`           | Deletes a key                                                           |
-| NOTIFY     | `NOTIFY key`        | Subscribe to changes for a specific key                                 |
-| DISCONNECT | `DISCONNECT`        | Close the connection to the server                                      |
+| Command    | Format               | Description                                                             |
+|------------|----------------------|-------------------------------------------------------------------------|
+| SET        | `SET key value`      | Sets a key to hold the specified value                                  |
+| SETX       | `SETX key value ttl` | Sets a key to hold the specified value with expiry time in milliseconds |
+| GET        | `GET key`            | Gets the value of a key                                                 |
+| DEL        | `DEL key`            | Deletes a key                                                           |
+| NOTIFY     | `NOTIFY key`         | Subscribe to changes for a specific key                                 |
+| DISCONNECT | `DISCONNECT`         | Close the connection to the server                                      |
 
 ## Project Roadmap
 
 - [x] **Persistence**: Save/restore data from disk
 - [x] **Key Expiration**: Set time-to-live for keys
-- [ ] **Data Types**: Support for lists, sets, and hashes
-- [ ] **Command Pipelining**: Batch multiple commands
+- [X] **Command Pipelining**: Batch multiple commands
 - [ ] **Authentication**: Simple password protection
 - [ ] **Clustering**: Distributed operation across multiple nodes
+- [ ] **Data Types**: Support for lists, sets, and hashes
 - [ ] **Admin Dashboard**: Web interface for monitoring and management
 
 ## Architecture
@@ -121,7 +121,7 @@ The notification system is implemented using a publisher-subscriber pattern with
 
 Contributions are welcome! Here are ways you can contribute:
 
-- Implement new features from the roadmap
+- Implement / Suggest new features from the roadmap
 - Improve performance or memory efficiency
 - Add tests and documentation
 - Report bugs and suggest enhancements

@@ -6,7 +6,7 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServerTester {
+public class ServerLoadTester {
     private static final int MAX_CLIENTS = 100;
     private static final int MAX_HITS = 10;
 

@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="changed LICENSE and README.md">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="added persistance and recovery via a simple append only log , and added ttl with expiration">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SocketItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SocketItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/ServerTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/ServerLoadTester.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +58,12 @@
   &quot;keyToString&quot;: {
     &quot;Application.Client (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Debug&quot;,
     &quot;Application.ServerTester.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TransactionTester.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VkDbTester.deleteValue.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VkDbTester.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.VkDbTester.setTransaction.executor&quot;: &quot;Run&quot;,
     &quot;Maven.vkdb [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.vkdb [package].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -83,21 +88,8 @@
       <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone\server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.Client (1)">
     <configuration name="Client (1)" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="com.vkdb.Client" />
-      <module name="client" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.vkdb.client.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Client" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.vkdb.Client" />
       <module name="client" />
       <extension name="coverage">
@@ -123,24 +115,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerTester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ServerTester" />
+    <configuration name="VkDbTester" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="VkDbTester" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
       <item itemvalue="Application.Client (1)" />
-      <item itemvalue="Application.Client" />
       <item itemvalue="Application.Server" />
-      <item itemvalue="Application.ServerTester" />
+      <item itemvalue="JUnit.VkDbTester" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Client" />
         <item itemvalue="Application.Server" />
-        <item itemvalue="Application.ServerTester" />
+        <item itemvalue="JUnit.VkDbTester" />
       </list>
     </recent_temporary>
   </component>
@@ -169,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745660554971</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="added persistance and recovery via a simple append only log , and added ttl with expiration">
+      <option name="closed" value="true" />
+      <created>1745757978576</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745757978576</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -186,6 +187,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial commit" />
     <MESSAGE value="changed LICENSE and README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="changed LICENSE and README.md" />
+    <MESSAGE value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
+    <option name="LAST_COMMIT_MESSAGE" value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
   </component>
 </project>
