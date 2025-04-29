@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="updated documentation to reflect completed features and added tests as well using Junit" />
+    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="used COMMIT instead of END for a transaction">
+      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +57,7 @@
   &quot;keyToString&quot;: {
     &quot;Application.Client (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
     &quot;Application.ServerTester.executor&quot;: &quot;Run&quot;,
     &quot;Application.TransactionTester.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.VkDbTester.deleteValue.executor&quot;: &quot;Run&quot;,
@@ -78,7 +87,7 @@
       <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone\server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Client (1)">
+  <component name="RunManager" selected="Application.Server">
     <configuration name="Client (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.vkdb.Client" />
       <module name="client" />
@@ -95,6 +104,7 @@
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.vkdb.server.Server" />
       <module name="server" />
+      <option name="PROGRAM_PARAMETERS" value="-p 8001" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.vkdb.server.*" />
@@ -176,7 +186,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745852553987</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="updated documentation spelling mistakes">
+      <option name="closed" value="true" />
+      <created>1745852649660</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745852649660</updated>
+    </task>
+    <task id="LOCAL-00007" summary="used COMMIT instead of END for a transaction">
+      <option name="closed" value="true" />
+      <created>1745852767534</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745852767534</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -196,6 +222,8 @@
     <MESSAGE value="added persistance and recovery via a simple append only log , and added ttl with expiration" />
     <MESSAGE value="added username and password authentication partially" />
     <MESSAGE value="updated documentation to reflect completed features and added tests as well using Junit" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated documentation to reflect completed features and added tests as well using Junit" />
+    <MESSAGE value="updated documentation spelling mistakes" />
+    <MESSAGE value="used COMMIT instead of END for a transaction" />
+    <option name="LAST_COMMIT_MESSAGE" value="used COMMIT instead of END for a transaction" />
   </component>
 </project>

@@ -44,4 +44,9 @@ public class AuthUser {
     public void updateLastLoginTime() {
         this.lastLoginTime = System.currentTimeMillis();
     }
+
+    @Override
+    public String toString() {
+        return this.username + "-" + this.password + System.lineSeparator();
+    }
 }

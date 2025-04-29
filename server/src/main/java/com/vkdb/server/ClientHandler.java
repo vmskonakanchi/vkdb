@@ -3,17 +3,15 @@ package com.vkdb.server;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
+import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class ClientHandler implements Runnable {
     private final SocketItem socketItem;
@@ -23,18 +21,20 @@ public class ClientHandler implements Runnable {
     private final LinkedBlockingQueue<SaveItem> diskWriteItems;
     private final ConcurrentHashMap<String, SaveItem> database;
     private final ConcurrentHashMap<String, AuthUser> authUsers;
-    private final AtomicBoolean inTransaction = new AtomicBoolean(false);
-    private final AtomicBoolean isLoggedIn = new AtomicBoolean(false);
+    private final LinkedList<SocketItem> replicas;
+    private boolean inTransaction = false;
+    private boolean isLoggedIn = false;
     private final LinkedList<String> transactionList = new LinkedList<>();
     private String loggedInUsername;
 
-    public ClientHandler(SocketItem socketItem, LinkedBlockingQueue<NotifyItem> notificationsQueue, ConcurrentHashMap<String, NotifyItem> keySocketsMap, LinkedBlockingQueue<SaveItem> diskWriteItems, ConcurrentHashMap<String, AuthUser> authUsers) {
+    public ClientHandler(SocketItem socketItem, LinkedBlockingQueue<NotifyItem> notificationsQueue, ConcurrentHashMap<String, NotifyItem> keySocketsMap, LinkedBlockingQueue<SaveItem> diskWriteItems, ConcurrentHashMap<String, AuthUser> authUsers, LinkedList<SocketItem> replicas) {
         this.socketItem = socketItem;
         this.notificationsQueue = notificationsQueue;
         this.keySocketsMap = keySocketsMap;
         this.diskWriteItems = diskWriteItems;
         this.database = socketItem.getDatabase();
         this.authUsers = authUsers;
+        this.replicas = replicas;
     }
 
     @Override
@@ -73,9 +73,10 @@ public class ClientHandler implements Runnable {
     private String processCommand(String originalCommand, String command, String[] commandParts) {
         try {
             String output = "";
+            boolean canReplicate = true;
 
-            // TODO : make sure i can disconnect without logging in
-            if (!isLoggedIn.get() && !command.equals("LOGIN")) {
+            // TODO : make sure i can without logging in
+            if (!isLoggedIn && !command.equals("LOGIN")) {
                 output = "ERROR PLEASE LOGIN";
                 return output;
             }
@@ -92,8 +93,12 @@ public class ClientHandler implements Runnable {
                         if (authUsers.containsKey(username)) {
                             output = "ERROR USERNAME EXISTS";
                         } else {
-                            authUsers.put(username, new AuthUser(username, password));
+                            AuthUser newUser = new AuthUser(username, password);
+                            authUsers.put(username, newUser);
                             output = "REGISTERED";
+
+                            // writing to the file to re-construct the user-list after server off
+                            Files.writeString(Constants.USER_LIST_PATH, newUser.toString(), StandardOpenOption.APPEND);
                         }
                     }
                 }
@@ -109,7 +114,7 @@ public class ClientHandler implements Runnable {
                                 output = "ERROR PASSWORD IS WRONG";
                             } else {
                                 authUser.updateLastLoginTime();
-                                isLoggedIn.set(true);
+                                isLoggedIn = true;
                                 loggedInUsername = username;
                                 output = "LOGIN SUCCESSFUL!";
                             }
@@ -122,7 +127,7 @@ public class ClientHandler implements Runnable {
                     if (commandParts.length != 3) {
                         output = "ERROR USAGE SET <KEY> <VALUE>";
                     } else {
-                        if (inTransaction.get()) {
+                        if (inTransaction) {
                             transactionList.addLast(originalCommand);
                             output = "SAVED TO BATCH";
                             break;
@@ -150,7 +155,7 @@ public class ClientHandler implements Runnable {
                     if (commandParts.length != 4) {
                         output = "ERROR USAGE SETX <KEY> <VALUE> <TTL>";
                     } else {
-                        if (inTransaction.get()) {
+                        if (inTransaction) {
                             transactionList.addLast(originalCommand);
                             output = "SAVED TO BATCH";
                             break;
@@ -164,8 +169,11 @@ public class ClientHandler implements Runnable {
                         try {
                             ttl = Long.parseLong(commandParts[3]);
                         } catch (NumberFormatException e) {
-                            if (inTransaction.get()) output = null;
-                            output = "ERROR <TTL> SHOULD BE NUMBER GOT : " + commandParts[2];
+                            if (inTransaction) {
+                                output = null;
+                            } else {
+                                output = "ERROR <TTL> SHOULD BE NUMBER GOT : " + commandParts[2];
+                            }
                             break;
                         }
 
@@ -197,7 +205,7 @@ public class ClientHandler implements Runnable {
                     if (commandParts.length != 2) {
                         output = "ERROR USAGE DEL <KEY>";
                     } else {
-                        if (inTransaction.get()) {
+                        if (inTransaction) {
                             transactionList.addLast(originalCommand);
                             output = "SAVED TO BATCH";
                             break;
@@ -216,7 +224,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 case "START" -> {
-                    // just a fake command for no use, but donot remove it in any case
+                    // just a fake command for no use, but don't remove it in any case
                 }
                 case "USERLIST" -> {
                     for (String key : authUsers.keySet()) {
@@ -224,7 +232,7 @@ public class ClientHandler implements Runnable {
                     }
                 }
                 case "BEGIN" -> {
-                    inTransaction.set(true);
+                    inTransaction = true;
                     transactionList.addLast("START");
                     output = "START";
                 }
@@ -232,7 +240,7 @@ public class ClientHandler implements Runnable {
                     if (transactionList.isEmpty()) {
                         output = "NO ITEMS FOUND";
                     } else {
-                        inTransaction.set(false);
+                        inTransaction = false;
                         while (!transactionList.isEmpty()) {
                             String savedCommand = transactionList.poll();  // taking and removing the item from the linked-list
                             String[] parts = savedCommand.split(" ");
@@ -245,7 +253,7 @@ public class ClientHandler implements Runnable {
                     if (commandParts.length != 2) {
                         output = "ERROR USAGE NOTIFY <KEY>";
                     } else {
-                        if (inTransaction.get()) {
+                        if (inTransaction) {
                             transactionList.addLast(originalCommand);
                             output = "SAVED TO BATCH";
                             break;
@@ -260,7 +268,33 @@ public class ClientHandler implements Runnable {
                         output = "OK";
                     }
                 }
-                default -> output = "WRONG AVAILABLE ARE GET, SET, SETX, DEL, NOTIFY,BEGIN,COMMIT,LOGIN,REGISTER,WHOAMI";
+                default -> {
+                    output = "WRONG AVAILABLE ARE GET, SET, SETX, DEL, NOTIFY,BEGIN,COMMIT,LOGIN,REGISTER,WHOAMI";
+                    canReplicate = false;
+                }
+            }
+
+            if (canReplicate) {
+                // replicate the command
+                List<Thread> replicationThreads = new ArrayList<>(replicas.size());
+
+                replicas.forEach(socketItem -> {
+                    Thread replThread = Thread.startVirtualThread(() -> {
+                        try {
+                            socketItem.getOutputStream().writeUTF(originalCommand);
+                        } catch (IOException e) {
+                            logger.info("Error occured when replicating " + e.getLocalizedMessage());
+                        }
+                    });
+                    replicationThreads.add(replThread);
+                });
+
+                if (Constants.IS_SYNCHRONOUS_REPLICATION) {
+                    // if this is synchronous we wait for every thread to finish the job and report back
+                    for (Thread t : replicationThreads) {
+                        t.join();
+                    }
+                }
             }
 
             return output;

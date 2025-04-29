@@ -105,10 +105,10 @@ CHANGED user1 Jane Smith
 - [x] **Persistence**: Save/restore data from disk
 - [x] **Key Expiration**: Set time-to-live for keys
 - [X] **Command Pipelining**: Batch multiple commands
-- [ ] **Authentication**: Simple password protection
+- [X] **Authentication**: Simple password protection
+- [ ] **Admin Dashboard**: Web interface for monitoring and management
 - [ ] **Clustering**: Distributed operation across multiple nodes
 - [ ] **Data Types**: Support for lists, sets, and hashes
-- [ ] **Admin Dashboard**: Web interface for monitoring and management
 
 ## Architecture
 
