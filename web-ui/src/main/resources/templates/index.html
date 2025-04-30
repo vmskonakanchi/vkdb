@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Welcome To VkDB</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<div class="flex justify-center p-4">
+    <h1 class="text-2xl font-semibold">Hello User <span th:text="${connectionText}"></span></h1>
+</div>
+
+<div class="h-[calc(100dvh-80px)] flex gap-4 px-4">
+
+    <!-- Left side: Key/Value/TTL + List -->
+    <div class="flex-1 bg-white rounded-lg shadow p-4 flex flex-col">
+        <h2 class="text-xl font-medium mb-4">Add Entry</h2>
+
+        <form class="flex gap-2 mb-4" method="post" action="/add">
+            <input type="text" placeholder="Key" class="border rounded outline-blue-500 px-3 py-1 w-1/3" name="key"
+                   required/>
+            <input type="text" placeholder="Value" class="border rounded outline-blue-500 px-3 py-1 w-1/3" name="value"
+                   required/>
+            <input type="number" placeholder="TTL (sec)" class="border rounded outline-blue-500 px-3 py-1 w-1/3"
+                   name="ttl"/>
+            <button type="submit" class="bg-blue-500 text-white px-4 rounded hover:bg-blue-600">Add</button>
+        </form>
+
+        <div class="flex-1 overflow-y-auto">
+            <h3 class="font-semibold mb-2">Stored Keys</h3>
+            <table class="w-full text-left border border-gray-300">
+                <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-2 py-1 border">Key</th>
+                    <th class="px-2 py-1 border">Value</th>
+                    <th class="px-2 py-1 border">TTL</th>
+                    <th class="px-2 py-1 border">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="e: ${entries}">
+                    <td class="px-2 py-1 border" th:text="${e.key}"></td>
+                    <td class="px-2 py-1 border" th:text="${e.value}"></td>
+                    <td class="px-2 py-1 border" th:text="${e.ttl}"></td>
+                    <td class="px-2 py-1 border">
+                        <a th:href="@{/delete(key=${e.key})}" class="px-2 py-1 border-white bg-red-500 p-4 rounded">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Right side: Replication Hosts -->
+    <div class="w-1/3 bg-white rounded-lg shadow p-4 flex flex-col">
+        <h2 class="text-xl font-medium mb-4">Replications</h2>
+
+        <table class="w-full text-left border border-gray-300">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="px-2 py-1 border">Host</th>
+                <th class="px-2 py-1 border">Port</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="px-2 py-1 border">192.168.1.10</td>
+                <td class="px-2 py-1 border">6379</td>
+            </tr>
+            <tr>
+                <td class="px-2 py-1 border">192.168.1.11</td>
+                <td class="px-2 py-1 border">6380</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

@@ -11,6 +11,18 @@ public class SocketItem {
     private final DataInputStream inputStream;
     private final ConcurrentHashMap<String, SaveItem> database;
     private final String id;
+    private final String username;
+    private final String password;
+
+    public SocketItem(String id, Socket socket, ConcurrentHashMap<String, SaveItem> database, DataOutputStream dataOutputStream, DataInputStream dataInputStream, String username, String password) {
+        this.id = id;
+        this.socket = socket;
+        this.outputStream = dataOutputStream;
+        this.inputStream = dataInputStream;
+        this.database = database;
+        this.username = username;
+        this.password = password;
+    }
 
     public SocketItem(String id, Socket socket, ConcurrentHashMap<String, SaveItem> database, DataOutputStream dataOutputStream, DataInputStream dataInputStream) {
         this.id = id;
@@ -18,6 +30,16 @@ public class SocketItem {
         this.outputStream = dataOutputStream;
         this.inputStream = dataInputStream;
         this.database = database;
+        this.username = null;
+        this.password = null;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getId() {

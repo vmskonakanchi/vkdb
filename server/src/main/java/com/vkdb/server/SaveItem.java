@@ -49,4 +49,8 @@ public class SaveItem {
     public String toString() {
         return this.operation + "=" + this.key + "=" + this.value + System.lineSeparator();
     }
+
+    public String toSend() {
+        return this.key + " " + this.value + " " + this.ttl;
+    }
 }

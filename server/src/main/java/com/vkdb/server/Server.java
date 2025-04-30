@@ -9,6 +9,8 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 public class Server {
@@ -19,22 +21,66 @@ public class Server {
     private static final ConcurrentHashMap<String, AuthUser> authUsers = new ConcurrentHashMap<>();
     private static final LinkedBlockingQueue<NotifyItem> notificationsQueue = new LinkedBlockingQueue<>();
     private static final LinkedList<SocketItem> replicas = new LinkedList<>();
-
+    private static final Lock lock = new ReentrantLock();
 
     public static void main(String[] args) {
-        int port = 6969;
         Options options = new Options();
-        Option portOption = new Option("p", "port", true, "Port for the server to run");
-        portOption.setRequired(false);
+        Option portOption = Option.builder()
+                .option("p")
+                .longOpt("port")
+                .hasArg(true)
+                .desc("Port for the server to run")
+                .required(false)
+                .build();
+
+        Option replicaHostOption = Option.builder()
+                .hasArg(false)
+                .option("rh")
+                .longOpt("rhost")
+                .desc("Master server host to connect")
+                .required(false)
+                .build();
+
+        Option replicaPortOption = Option.builder()
+                .hasArg(false)
+                .option("rp")
+                .longOpt("rport")
+                .desc("Master server port to connect")
+                .required(false)
+                .build();
+
+        Option replicaUserOption = Option.builder()
+                .hasArg(false)
+                .option("ru")
+                .longOpt("ruser")
+                .desc("The user for this replica to connect to master")
+                .required(false)
+                .build();
+
+        Option replicaPasswordOption = Option.builder()
+                .hasArg(false)
+                .option("rp")
+                .longOpt("rpass")
+                .desc("The password for this replica to connect to master")
+                .required(false)
+                .build();
+
 
         options.addOption(portOption);
+        options.addOption(replicaHostOption);
+        options.addOption(replicaPortOption);
+        options.addOption(replicaUserOption);
+        options.addOption(replicaPasswordOption);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
 
+        int port; // port to run on
+
         try {
             cmd = parser.parse(options, args);
-            port = Integer.parseInt(cmd.getOptionValue("port"));
+            port = Integer.parseInt(cmd.getOptionValue("port") == null ? "6969" : cmd.getOptionValue("port"));
         } catch (Exception e) {
             logger.info(e.getLocalizedMessage());
             formatter.printHelp("utility-name", options);
@@ -46,8 +92,11 @@ public class Server {
             logger.info("Server is ready to accept connections on port " + port);
 
             try {
+                lock.lock();
                 Files.createFile(Constants.APPEND_ONLY_LOG_FILE_PATH);   // creating file for append only log if not exists
+                lock.unlock();
             } catch (FileAlreadyExistsException e) {
+                lock.unlock();
                 logger.info("Append only log file exists at " + Constants.APPEND_ONLY_LOG_FILE_PATH.toAbsolutePath());
             }
 
@@ -66,6 +115,8 @@ public class Server {
 
             // Shutdown hook , called before shutting down jvm
             Runtime.getRuntime().addShutdownHook(new Thread(Server::handleShutDown));
+
+            // parsing replication
 
             while (true) {
                 Socket socket = server.accept(); // accepting new sockets
@@ -99,6 +150,7 @@ public class Server {
     }
 
     private static void handlePersistence() {
+        lock.lock();
         try (BufferedReader reader = new BufferedReader(new FileReader(Constants.APPEND_ONLY_LOG_FILE_PATH.toFile()))) {
 
             // replaying the append only log file format for setting the data
@@ -125,17 +177,19 @@ public class Server {
             });
 
             logger.info("Reading completed saved : " + database.size() + " entries");
+            lock.unlock();
 
 
             while (true) {
                 SaveItem item = diskWriteItems.take();
                 logger.info("Got a item to save with key : " + item.getKey() + " with value " + item.getValue());
-
+                lock.lock();
                 try (FileOutputStream fos = new FileOutputStream(Constants.APPEND_ONLY_LOG_FILE_PATH.toFile(), true)) {
                     fos.write(item.toString().getBytes());
                     fos.flush();
                     fos.getFD().sync(); // Ensures data is on disk
                 }
+                lock.unlock();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,6 +219,7 @@ public class Server {
         try {
             while (true) {
                 Thread.sleep(Constants.COMPACTION_INTERVAL);
+                lock.lock();
 
                 logger.info("Starting compaction");
 
@@ -200,6 +255,8 @@ public class Server {
 
                 // Write the compacted result
                 writeCompactedFile(latestEntries);
+
+                lock.unlock();
                 logger.info("Compaction completed for the file");
             }
         } catch (Exception e) {

@@ -84,6 +84,22 @@ public class ClientHandler implements Runnable {
             switch (command) {
                 case "DISCONNECT" -> output = "BYE";
                 case "WHOAMI" -> output = loggedInUsername;
+                case "KEYS" -> {
+                    for (SaveItem item : database.values()) {
+                        output += item.getKey() + "\n";
+                    }
+                    if (!output.isEmpty()) {
+                        output = output.substring(0, output.length() - 1);
+                    }
+                }
+                case "ALL" -> {
+                    for (SaveItem item : database.values()) {
+                        output += item.toSend() + "\n";
+                    }
+                    if (!output.isEmpty()) {
+                        output = output.substring(0, output.length() - 1);
+                    }
+                }
                 case "REGISTER" -> {
                     if (commandParts.length != 3) {
                         output = "ERROR USAGE REGISTER <USERNAME> <PASSWORD>";
@@ -229,6 +245,9 @@ public class ClientHandler implements Runnable {
                 case "USERLIST" -> {
                     for (String key : authUsers.keySet()) {
                         output = output.concat(key + "\n");
+                    }
+                    if (!output.isEmpty()) {
+                        output = output.substring(0, output.length() - 1);
                     }
                 }
                 case "BEGIN" -> {

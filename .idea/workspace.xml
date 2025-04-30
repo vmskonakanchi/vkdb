@@ -4,25 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="used COMMIT instead of END for a transaction">
-      <change afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Constants.java" afterDir="false" />
+    <list default="true" id="8a7be38f-1a76-4f49-8f0b-8b04c5ded6df" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/web-ui/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/vamsik/vkdb/ui/VkdbApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/java/com/vamsik/vkdb/ui/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/main/resources/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web-ui/src/test/java/com/vamsik/vkdb/ui/VkdbApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/AuthUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SaveItem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/test/java/VkDbTester.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SocketItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/main/java/com/vkdb/server/SocketItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -48,37 +63,44 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2wB3n4YnGojSFbelgJJ6rbADYzK" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Client (1).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerTester.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TransactionTester.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.VkDbTester.deleteValue.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.VkDbTester.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.VkDbTester.setTransaction.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.vkdb [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.vkdb [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vmsko/OneDrive/Desktop/Research/redis-clone/client/src/main/java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Client (1).executor": "Run",
+    "Application.Client.executor": "Run",
+    "Application.Server.executor": "Run",
+    "Application.ServerTester.executor": "Run",
+    "Application.TransactionTester.executor": "Run",
+    "Application.VkdbApplication.executor": "Debug",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JUnit.VkDbTester.deleteValue.executor": "Run",
+    "JUnit.VkDbTester.executor": "Run",
+    "JUnit.VkDbTester.setTransaction.executor": "Run",
+    "Maven.vkdb [clean].executor": "Run",
+    "Maven.vkdb [package].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/vmsko/OneDrive/Desktop/Research/redis-clone/web-ui/src/main/resources/templates",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.web.browsers"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone\web-ui\src\main\resources\templates" />
+      <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone" />
       <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone\client\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -87,7 +109,7 @@
       <recent name="C:\Users\vmsko\OneDrive\Desktop\Research\redis-clone\server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Server">
+  <component name="RunManager" selected="Application.VkdbApplication">
     <configuration name="Client (1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.vkdb.Client" />
       <module name="client" />
@@ -104,10 +126,22 @@
     <configuration name="Server" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.vkdb.server.Server" />
       <module name="server" />
-      <option name="PROGRAM_PARAMETERS" value="-p 8001" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.vkdb.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VkdbApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.vamsik.vkdb.ui.VkdbApplication" />
+      <module name="vkdb (1) (com.vamsik)" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.vamsik.vkdb.ui.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -127,11 +161,13 @@
     </configuration>
     <list>
       <item itemvalue="Application.Client (1)" />
+      <item itemvalue="Application.VkdbApplication" />
       <item itemvalue="Application.Server" />
       <item itemvalue="JUnit.VkDbTester" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.VkdbApplication" />
         <item itemvalue="Application.Server" />
         <item itemvalue="JUnit.VkDbTester" />
       </list>
@@ -202,7 +238,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745852767534</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="some major bug fixes, and started working on replication and distribution in nodes">
+      <option name="closed" value="true" />
+      <created>1745936554898</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745936554898</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -224,6 +268,17 @@
     <MESSAGE value="updated documentation to reflect completed features and added tests as well using Junit" />
     <MESSAGE value="updated documentation spelling mistakes" />
     <MESSAGE value="used COMMIT instead of END for a transaction" />
-    <option name="LAST_COMMIT_MESSAGE" value="used COMMIT instead of END for a transaction" />
+    <MESSAGE value="some major bug fixes, and started working on replication and distribution in nodes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some major bug fixes, and started working on replication and distribution in nodes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.nio.file.FileSystemException" package="java.nio.file" />
+          <option name="timeStamp" value="11" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
